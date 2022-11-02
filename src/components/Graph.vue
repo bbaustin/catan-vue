@@ -6,13 +6,15 @@
       :key="n + 1"
       class="graph-bar-holder"
     >
-      <!-- TODO: Below is working, but I wonder if a computed property would be better. Because this div kind of serves no purpose, and is being added 0px to all column -->
-      <div v-for="(roll, index) in allRolls">
+      <!-- NOTE: Below works using a template, which seems kind of like React.Fragment-->
+      <!-- This could also be accomplished using a computed property [filter function] -->
+      <!-- More info here: https://vuejs.org/style-guide/rules-essential.html#avoid-v-if-with-v-for -->
+      <template v-for="(roll, index) in allRolls">
         <div
           v-if="roll === n + 1"
-          :style="{ backgroundColor: colors[index % colors.length] }"
+          :style="{ backgroundColor: colors[index % colors.length], height: `${100 / this.maxFrequency}%` }"
         ></div>
-      </div>
+      </template>
     </div>
   </div>
   <div class="graph-number-boxes">
@@ -29,11 +31,8 @@ import GraphNumberBox from './GraphNumberBox.vue';
 export default {
   name: 'Graph',
   components: { GraphNumberBox },
-  props: ['allRolls', 'colors'],
+  props: ['allRolls', 'colors', 'maxFrequency'],
   computed: {
-    filterRollsByTotal() {
-
-    },
     determineColor(rollNumber) {
       for (let i = this.colors.length - 1; i < 0; i--) {
         if (rollNumber % i === 0) {
@@ -57,18 +56,9 @@ export default {
 }
 
 .graph-bar-holder {
-  border: .1rem dotted $black;
-  border-bottom: none;
   display: flex;
   flex-direction: column-reverse;
   width: 7rem;
-}
-
-.graph-bar-holder div div {
-  align-self: baseline;
-  width: 100%;
-  height: 1rem;
-  border: 1px solid $black;
 }
 
 .graph-number-boxes {
