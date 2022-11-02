@@ -22,6 +22,8 @@
       v-for="n in 11"
       :key="n + 1"
       :rollTotal="n + 1"
+      :allRollsLength="allRolls.length"
+      :currentCount="currentCount[n - 1]"
     />
   </div>
 </template>
@@ -31,7 +33,7 @@ import GraphNumberBox from './GraphNumberBox.vue';
 export default {
   name: 'Graph',
   components: { GraphNumberBox },
-  props: ['allRolls', 'colors', 'maxFrequency'],
+  props: ['allRolls', 'colors', 'maxFrequency', 'currentCount'],
   computed: {
     determineColor(rollNumber) {
       for (let i = this.colors.length - 1; i < 0; i--) {

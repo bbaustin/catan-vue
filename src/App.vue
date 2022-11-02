@@ -14,6 +14,7 @@
       :allRolls="allRolls"
       :colors="['#3b8fd8', '#fb4d43', '#D2D2D2', '#fab913', '#AC6D00', '#2ECC40']"
       :maxFrequency="maxFrequency"
+      :currentCount="currentCount"
     />
     <!-- <NameDisplayNext :nextPlayer="players[function to get correct index even if at end of array] TODO: -->
   </div>
@@ -33,19 +34,24 @@ export default {
   methods: {
     handleClick() {
       this.rollDice()
-      this.calculateRollFrequency()
+      this.countRolls()
+      this.calculateFrequency()
       this.advancePlayer()
     },
     rollDice() {
       this.currentRoll = [Math.floor(Math.random() * 6) + 1, Math.floor(Math.random() * 6) + 1]
       this.allRolls.push(this.currentRoll[0] + this.currentRoll[1])
     },
-    calculateRollFrequency() {
-      for (let i = 0; i < this.allRolls.length; i++) {
-        let currentCount = this.allRolls.filter((roll) => roll == this.allRolls[i]).length;
-        if (this.maxFrequency < currentCount) {
-          this.maxFrequency = currentCount
-        }
+    countRolls() {
+      this.currentCount = []
+      for (let i = 2; i < 13; i++) { //TODO: Improve this? More like simple counter, haha
+        this.currentCount.push(this.allRolls.filter((roll) => roll == i).length);
+      }
+    },
+    calculateFrequency() {
+      let currentMax = Math.max(...this.currentCount)
+      if (this.maxFrequency < currentMax) {
+        this.maxFrequency = currentMax
       }
     },
     advancePlayer() {
@@ -87,7 +93,8 @@ export default {
       currentRoll: [],
       allRolls: [],
       currentPlayerIndex: 0,
-      maxFrequency: 1
+      maxFrequency: 1,
+      currentCount: []
     }
   }
 }
