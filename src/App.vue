@@ -1,36 +1,47 @@
 <template>
-  <Modal />
-  <div
-    id="app"
-    @click="handleClick"
-  >
-    <NameDisplayCurrent :currentPlayer="players[currentPlayerIndex]" />
-    <Dice
-      :currentRoll="currentRoll"
-      :currentTotal="allRolls.at(-1)"
+  <main id="app">
+    <Modal
+      v-if="!players.length"
+      @set-players="(players) => setPlayers(players)"
     />
-    <!--TODO:  Send colors differnelty -->
-    <Graph
-      :allRolls="allRolls"
-      :colors="['#3b8fd8', '#fb4d43', '#D2D2D2', '#fab913', '#AC6D00', '#2ECC40']"
-      :maxFrequency="maxFrequency"
-      :currentCount="currentCount"
-    />
-    <!-- <NameDisplayNext :nextPlayer="players[function to get correct index even if at end of array] TODO: -->
-  </div>
+    <div @click="handleClick">
+      <NameDisplay
+        v-if="allRolls.length"
+        :currentPlayer="players[currentPlayerIndex]"
+        :previousPlayer="players[previousPlayerIndex]"
+      />
+      <div v-else>
+        <p v-if="this.players.length">
+          <span :style="{ color: this.players[0].color }">{{ this.players[0].name }}</span> is up first!
+        </p>
+        <p>Click anywhere to roll!</p>
+      </div>
+      <Dice
+        :currentRoll="currentRoll"
+        :currentTotal="allRolls.at(-1)"
+      />
+      <!--TODO:  Send colors differnelty -->
+      <Graph
+        :allRolls="allRolls"
+        :colors="Object.values(players).map(player => player.color)"
+        :maxFrequency="maxFrequency"
+        :currentCount="currentCount"
+      />
+      <!-- <NameDisplayNext :nextPlayer="players[function to get correct index even if at end of array] TODO: -->
+    </div>
+  </main>
 </template>
 
 <script>
 import Dice from './components/Dice.vue'
 import Graph from './components/Graph.vue'
 import Modal from './components/Modal.vue'
-import NameDisplayCurrent from './components/NameDisplayCurrent.vue'
-// import NameDisplayNext from './components/NameDisplayNext.vue'  // TODO:
+import NameDisplay from './components/NameDisplay.vue'
 import { COLORS } from './assets/Constants'
 export default {
   name: 'App',
   components: {
-    Dice, Graph, Modal, NameDisplayCurrent, // TODO: NameDisplayNext
+    Dice, Graph, Modal, NameDisplay,
   },
   methods: {
     handleClick() {
@@ -56,43 +67,22 @@ export default {
       }
     },
     advancePlayer() {
+      this.previousPlayerIndex = this.currentPlayerIndex
       if (this.currentPlayerIndex === this.players.length - 1) {
         return this.currentPlayerIndex = 0
       }
       return this.currentPlayerIndex++
+    },
+    setPlayers(players) {
+      this.players = players
     }
   },
   data() {
     return {
-      players: [
-        // TODO: It would be cool, but not entirely necessary, to send these colors via scss somehow
-        {
-          name: 'Ben',
-          color: '#D2D2D2',
-        },
-        {
-          name: 'Kaori',
-          color: '#fb4d43'
-        },
-        {
-          name: 'Sam',
-          color: '#3b8fd8'
-        },
-        {
-          name: 'Phil',
-          color: '#fab913'
-        },
-        {
-          name: 'Kyoha',
-          color: '#AC6D00'
-        },
-        {
-          name: 'Hikari',
-          color: '#2ECC40'
-        }
-      ], //TODO: Add this in modal. Doing graph first.
+      players: [],
       currentRoll: [],
       allRolls: [],
+      previousPlayerIndex: 0,
       currentPlayerIndex: 0,
       maxFrequency: 1,
       currentCount: []

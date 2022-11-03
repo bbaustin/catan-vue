@@ -84,34 +84,58 @@ export default {
   },
   methods: {
     handleNextClick() {
-      if (this.modalStatus === MODAL_STATUS.numberOfPlayers) this.getNumberOfPlayers()
-      if (this.modalStatus === MODAL_STATUS.playerNames) this.getPlayerNamesAndColors()
+      // if (this.modalStatus === MODAL_STATUS.numberOfPlayers) this.getNumberOfPlayers()
+      // if (this.modalStatus === MODAL_STATUS.playerNames) this.getPlayerNamesAndColors()
+      if (this.modalStatus === MODAL_STATUS.numberOfPlayers) {
+        if (this.numberOfPlayers < 2 || this.numberOfPlayers > 6) {
+          return this.errorStatus = ERROR_STATUS.numberOfPlayersError
+        }
+        if (this.errorStatus) this.errorStatus = ''
+        // TODO: emit number? Maybe not, just use length of players, no? 
+        return this.modalStatus = MODAL_STATUS.playerNames
+      }
+
+      if (this.modalStatus === MODAL_STATUS.playerNames) {
+        if (!this.selectedColor) {
+          return this.errorStatus = ERROR_STATUS.playerColorError
+        }
+        this.currentPlayerNumber++
+        if (this.currentPlayerNumber > this.numberOfPlayers) {
+          this.modalStatus = ''
+          this.$emit('set-players', this.players)
+        }
+        if (this.currentPlayerName === '') {
+          this.currentPlayerName = `Player ${this.currentPlayerNumber - 1}`
+        }
+        this.players.push({ name: this.currentPlayerName, color: this.selectedColor })
+        this.availableColors.splice(this.availableColors.indexOf(this.selectedColor), 1)
+        this.currentPlayerName = ''
+        this.selectedColor = ''
+        this.errorStatus = ''
+      }
     },
-    getNumberOfPlayers() {
-      if (this.numberOfPlayers < 2 || this.numberOfPlayers > 6) {
-        return this.errorStatus = ERROR_STATUS.numberOfPlayersError
-      }
-      if (this.errorStatus) this.errorStatus = ''
-      // emit number
-      return this.modalStatus = MODAL_STATUS.playerNames
-    },
-    getPlayerNamesAndColors() {
-      if (!this.selectedColor) {
-        return this.errorStatus = ERROR_STATUS.playerColorError
-      }
-      this.currentPlayerNumber++
-      if (this.currentPlayerNumber > this.numberOfPlayers) {
-        this.modalStatus = ''
-        // return emit playerNames
-      }
-      if (this.currentPlayerName === '') {
-        this.currentPlayerName = `Player ${this.currentPlayerNumber}`
-      }
-      this.players.push({ name: this.currentPlayerName, color: this.selectedColor })
-      this.availableColors.splice(this.availableColors.indexOf(this.selectedColor), 1)
-      this.currentPlayerName = ''
-      this.selectedColor = ''
-    },
+    // getNumberOfPlayers() {
+    //   if (this.numberOfPlayers < 2 || this.numberOfPlayers > 6) {
+    //     return this.errorStatus = ERROR_STATUS.numberOfPlayersError
+    //   }
+    //   if (this.errorStatus) this.errorStatus = ''
+    //   // emit number
+    //   return this.modalStatus = MODAL_STATUS.playerNames
+    // },
+    // getPlayerNamesAndColors() {
+    //   this.currentPlayerNumber++
+    //   if (this.currentPlayerNumber > this.numberOfPlayers) {
+    //     this.modalStatus = ''
+    //     // return emit playerNames
+    //   }
+    //   if (this.currentPlayerName === '') {
+    //     this.currentPlayerName = `Player ${this.currentPlayerNumber}`
+    //   }
+    //   this.players.push({ name: this.currentPlayerName, color: this.selectedColor })
+    //   this.availableColors.splice(this.availableColors.indexOf(this.selectedColor), 1)
+    //   this.currentPlayerName = ''
+    //   this.selectedColor = ''
+    // },
     handleColorSquareClick(color) {
       this.selectedColor = color
     },
