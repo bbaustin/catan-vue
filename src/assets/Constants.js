@@ -10,3 +10,12 @@ export const MODAL_STATUS = {
   playerNames: 'PLAYER_NAMES',
   // playerOrder: 'PLAYER_ORDER'  // Possible TODO:
 };
+
+export const COLORS = {
+  red: '#D51212',
+  orange: '#ee8434',
+  green: '#20bf55',
+  blue: '#0a81d1',
+  brown: '#715232',
+  white: '#dad7cd',
+};

@@ -26,6 +26,7 @@ import Graph from './components/Graph.vue'
 import Modal from './components/Modal.vue'
 import NameDisplayCurrent from './components/NameDisplayCurrent.vue'
 // import NameDisplayNext from './components/NameDisplayNext.vue'  // TODO:
+import { COLORS } from './assets/Constants'
 export default {
   name: 'App',
   components: {

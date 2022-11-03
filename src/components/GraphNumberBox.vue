@@ -2,7 +2,7 @@
   <div class="graph-number-box">
     <p>{{ rollTotal }}</p>
     <p>{{ currentCount }}</p>
-    <p>{{ (currentCount / allRollsLength * 100).toFixed(1) }}%</p>
+    <p>{{ allRollsLength ? (currentCount / allRollsLength * 100).toFixed(1) : 0 }}%</p>
   </div>
 </template>
 <script>

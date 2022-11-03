@@ -18,6 +18,10 @@ html {
   supported by Chrome, Edge, Opera and Firefox */
 }
 
+body {
+  margin: 0;
+}
+
 #app {
   min-height: 100vh;
 }
@@ -33,7 +37,7 @@ p {
 .error::before {
   content: '!!!';
   background: red;
-  color: $white;
+  color: $ui-white;
 }
 
 .error {
