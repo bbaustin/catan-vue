@@ -46,6 +46,23 @@ p {
   text-decoration-color: red;
 }
 
+p.display-name {
+  font-size: 4.8rem;
+  font-weight: 500;
+  margin: 3rem 0 1rem 0;
+  text-align: center;
+}
+
+p.sub-name {
+  font-size: 2.4rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+span {
+  font-weight: 700;
+}
+
 /* :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;

@@ -1,13 +1,13 @@
 <template>
   <div class="graph-number-box">
-    <p>{{ rollTotal }}</p>
+    <p><span :style="{ color: this.highlight }">{{ rollTotal }}</span></p>
     <p>{{ currentCount }}</p>
     <p>{{ allRollsLength ? (currentCount / allRollsLength * 100).toFixed(1) : 0 }}%</p>
   </div>
 </template>
 <script>
 export default {
-  props: ['rollTotal', 'currentCount', 'allRollsLength'],
+  props: ['rollTotal', 'currentCount', 'allRollsLength', 'highlight'],
 }
 </script>
 
@@ -21,5 +21,20 @@ export default {
   flex-direction: column;
   justify-content: center;
   width: 7rem;
+}
+
+p {
+  margin: 2rem 0 0 0;
+}
+
+p:first-child {
+  font-size: 2.4rem;
+  font-weight: 500;
+  line-height: 2.4rem;
+}
+
+p:last-child {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
 }
 </style>

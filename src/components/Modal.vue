@@ -12,8 +12,7 @@
         v-if="this.modalStatus === 'NUMBER_OF_PLAYERS'"
         class="modal-content"
       >
-        <h3>How many are playing?</h3>
-        <p>Enter a number from 2-6</p>
+        <p class="topic">How many are playing?</p>
         <input
           type="text"
           inputmode="decimal"
@@ -21,6 +20,7 @@
           v-model="numberOfPlayers"
           autofocus
         />
+        <p class="detail">Enter a number from 2-6</p>
         <button
           type="button"
           @click="handleNextClick"
@@ -33,15 +33,16 @@
         <div
           v-for="n in this.numberOfPlayers"
           :key="n"
+          style="width: 100%;"
         >
-          <h3>Enter player {{ currentPlayerNumber }}'s name</h3>
+          <p class="topic">Enter Player {{ currentPlayerNumber }}'s name</p>
           <input
             type="text"
             v-model="currentPlayerName"
             autofocus
             ref="nameInput"
           />
-          <h3>Choose a color</h3>
+          <p class="topic">Choose a color</p>
           <div class="color-picker">
             <div
               v-for="(availableColor) in this.availableColors"
@@ -51,7 +52,6 @@
               @click="this.handleColorSquareClick(availableColor)"
             ></div>
           </div>
-
           <button
             type="button"
             @click="handleNextClick"
@@ -176,19 +176,24 @@ export default {
   flex-direction: column;
   justify-content: center;
   margin-bottom: 20%;
-  padding: 5rem 2rem;
+  padding: 5rem 7rem;
   top: 0;
   width: 50%;
   z-index: 10;
 }
 
 .modal-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
   width: 100%;
 }
 
 .color-picker {
   display: flex;
   justify-content: space-around;
+  margin-bottom: 6rem;
 }
 
 .color-square {
@@ -197,5 +202,43 @@ export default {
   cursor: pointer;
   height: 5rem;
   width: 5rem;
+}
+
+p {
+  margin: 0;
+}
+
+input {
+  height: 4rem;
+  font-size: 2.4rem;
+  padding-left: 1rem;
+  margin-bottom: .5rem;
+}
+
+input[inputmode="decimal"] {
+  width: 1.5rem;
+  text-align: center;
+  padding-right: 1rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  margin-bottom: 4rem;
+}
+
+button {
+  width: 10rem;
+  height: 5rem;
+  font-size: 2.4rem;
+}
+
+.topic {
+  font-size: 3.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail {
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
 }
 </style>

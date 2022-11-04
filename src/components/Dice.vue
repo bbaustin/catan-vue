@@ -1,12 +1,11 @@
 <template>
-  <section v-if="currentRoll.length">
+  <section>
     <div>
       <div class="dice">{{ currentRoll[0] }}</div>
       <div class="dice">{{ currentRoll[1] }}</div>
     </div>
-    <p>Total: {{ this.currentTotal }}</p>
+    <p>Total: <span>{{ this.currentTotal }}</span></p>
   </section>
-  <h3 v-else>Click anywhere to roll!</h3>
 </template>
 
 <script>
@@ -39,5 +38,9 @@ section div {
   justify-content: center;
   margin: 1rem;
   width: 10rem;
+}
+
+p {
+  margin: 1rem;
 }
 </style>

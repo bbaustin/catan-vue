@@ -11,10 +11,14 @@
         :previousPlayer="players[previousPlayerIndex]"
       />
       <div v-else>
-        <p v-if="this.players.length">
-          <span :style="{ color: this.players[0].color }">{{ this.players[0].name }}</span> is up first!
+        <p
+          v-if="this.players.length"
+          class="display-name"
+        >
+          <span :style="{ color: this.players[0].color }">{{ this.players[0].name }}</span> is up
+          first!
         </p>
-        <p>Click anywhere to roll!</p>
+        <p class="sub-name">Click anywhere to roll!</p>
       </div>
       <Dice
         :currentRoll="currentRoll"
@@ -26,6 +30,7 @@
         :colors="Object.values(players).map(player => player.color)"
         :maxFrequency="maxFrequency"
         :currentCount="currentCount"
+        :highlight="players.length ? players[previousPlayerIndex].color : ''"
       />
       <!-- <NameDisplayNext :nextPlayer="players[function to get correct index even if at end of array] TODO: -->
     </div>
@@ -37,7 +42,6 @@ import Dice from './components/Dice.vue'
 import Graph from './components/Graph.vue'
 import Modal from './components/Modal.vue'
 import NameDisplay from './components/NameDisplay.vue'
-import { COLORS } from './assets/Constants'
 export default {
   name: 'App',
   components: {
