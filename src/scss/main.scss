@@ -34,16 +34,15 @@ p {
   font-size: 2rem;
 }
 
-.error::before {
-  content: '!!!';
-  background: red;
-  color: $ui-white;
-}
-
 .error {
-  font-size: 2rem;
+  color: red;
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-top: 3rem;
   text-decoration: wavy underline;
   text-decoration-color: red;
+  text-underline-offset: .5rem;
+  text-decoration-thickness: .1rem;
 }
 
 p.display-name {

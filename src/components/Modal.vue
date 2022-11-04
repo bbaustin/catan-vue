@@ -41,6 +41,7 @@
             v-model="currentPlayerName"
             autofocus
             ref="nameInput"
+            style="marginBottom: 4rem"
           />
           <p class="topic">Choose a color</p>
           <div class="color-picker">
@@ -48,7 +49,7 @@
               v-for="(availableColor) in this.availableColors"
               class="color-square"
               :key="availableColor"
-              :style="{ backgroundColor: availableColor, border: `${selectedColor === availableColor ? '1px solid yellow' : ''}` }"
+              :style="{ backgroundColor: availableColor, border: `${selectedColor === availableColor ? '.1rem solid yellow' : ''}` }"
               @click="this.handleColorSquareClick(availableColor)"
             ></div>
           </div>
@@ -57,11 +58,11 @@
             @click="handleNextClick"
           >Next</button>
         </div>
-        <span
-          v-if="this.errorStatus"
-          class="error"
-        >{{ this.errorStatus }}</span>
       </div>
+      <span
+        v-if="this.errorStatus"
+        class="error"
+      >{{ this.errorStatus }}</span>
     </div>
   </section>
 </template>
@@ -87,7 +88,7 @@ export default {
       // if (this.modalStatus === MODAL_STATUS.numberOfPlayers) this.getNumberOfPlayers()
       // if (this.modalStatus === MODAL_STATUS.playerNames) this.getPlayerNamesAndColors()
       if (this.modalStatus === MODAL_STATUS.numberOfPlayers) {
-        if (this.numberOfPlayers < 2 || this.numberOfPlayers > 6) {
+        if (!/^([2-6]{1,})$/.test(this.numberOfPlayers)) {
           return this.errorStatus = ERROR_STATUS.numberOfPlayersError
         }
         if (this.errorStatus) this.errorStatus = ''
@@ -197,7 +198,6 @@ export default {
 }
 
 .color-square {
-  border-radius: 1rem;
   border: 1px solid $black;
   cursor: pointer;
   height: 5rem;
@@ -209,27 +209,23 @@ p {
 }
 
 input {
-  height: 4rem;
   font-size: 2.4rem;
-  padding-left: 1rem;
+  height: 4rem;
   margin-bottom: .5rem;
+  padding-left: 1rem;
 }
 
 input[inputmode="decimal"] {
-  width: 1.5rem;
-  text-align: center;
   padding-right: 1rem;
-}
-
-input[type="text"] {
-  width: 100%;
-  margin-bottom: 4rem;
+  text-align: center;
+  width: 3rem;
 }
 
 button {
-  width: 10rem;
-  height: 5rem;
+  cursor: pointer;
   font-size: 2.4rem;
+  height: 5rem;
+  width: 10rem;
 }
 
 .topic {
