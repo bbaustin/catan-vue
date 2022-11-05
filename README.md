@@ -1,7 +1,3 @@
-# Vue 3 + Vite
+# Catan Dice Roller (Vue)
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+A couple of years ago, I made a dice roller for playing "Settlers of Catan," after my cat knocked my game's dice into oblivion ([demo](https://hereismy.website/catan-dice-roller/), [code](https://github.com/bbaustin/catan)). That was built with vanilla JavaScript. I decided to build the same thing again, this time using Vue.js. It has an improved (?) design and an extra feature or two. 
