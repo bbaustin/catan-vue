@@ -9,12 +9,12 @@
 </template>
 <script>
 export default {
-  props: ["rollTotal", "currentCount", "allRollsLength", "highlight"],
+  props: ['rollTotal', 'currentCount', 'allRollsLength', 'highlight'],
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../scss/_variables.scss";
+@import '../scss/_variables.scss';
 
 .graph-number-box {
   align-items: center;
@@ -23,6 +23,10 @@ export default {
   flex-direction: column;
   justify-content: center;
   width: 7rem;
+}
+
+.dark .graph-number-box {
+  border: 0.1rem solid $ui-white;
 }
 
 p {

@@ -49,6 +49,7 @@
           <button type="button" @click="handleNextClick">Next</button>
         </div>
       </div>
+      <p class="note">Note: Once the game begins, hit 'm' to toggle dark/light mode.</p>
       <span v-if="this.errorStatus" class="error">{{ this.errorStatus }}</span>
     </div>
   </section>
@@ -237,5 +238,10 @@ button {
 .detail {
   font-size: 1.6rem;
   margin-bottom: 2rem;
+}
+
+.note {
+  font-size: 1.2rem;
+  margin-top: 2rem;
 }
 </style>

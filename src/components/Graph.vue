@@ -35,24 +35,26 @@
 </template>
 
 <script>
-import GraphNumberBox from "./GraphNumberBox.vue";
+import GraphNumberBox from './GraphNumberBox.vue';
 export default {
-  name: "Graph",
+  name: 'Graph',
   components: { GraphNumberBox },
-  props: ["allRolls", "colors", "maxFrequency", "currentCount", "highlight"],
+  props: ['allRolls', 'colors', 'maxFrequency', 'currentCount', 'highlight'],
   methods: {
     filterRolls() {
       allRolls;
     },
   },
   data() {
-    filteredAllRolls: this.allRolls;
+    return {
+      filteredAllRolls: this.allRolls,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../scss/variables.scss";
+@import '../scss/variables.scss';
 
 section {
   margin: 0 2rem;
@@ -64,6 +66,11 @@ section {
   display: flex;
   height: 12rem;
   justify-content: space-around;
+}
+
+.dark .graph {
+  border-bottom: 0.1rem solid $ui-white;
+  border-left: 0.1rem solid $ui-white;
 }
 
 .graph-bar-holder {

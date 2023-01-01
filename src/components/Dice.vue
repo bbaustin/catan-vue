@@ -4,19 +4,21 @@
       <div class="dice">{{ currentRoll[0] }}</div>
       <div class="dice">{{ currentRoll[1] }}</div>
     </div>
-    <p>Total: <span>{{ this.currentTotal }}</span></p>
+    <p>
+      Total: <span>{{ this.currentTotal }}</span>
+    </p>
   </section>
 </template>
 
 <script>
 export default {
   name: 'Dice',
-  props: ['currentRoll', 'currentTotal']
-}
+  props: ['currentRoll', 'currentTotal'],
+};
 </script>
 
-<style lang='scss' scoped>
-@import "../scss/_variables.scss";
+<style lang="scss" scoped>
+@import '../scss/_variables.scss';
 
 section {
   align-items: center;
@@ -31,13 +33,17 @@ section div {
 
 .dice {
   align-items: center;
-  border: .1rem solid $black;
+  border: 0.1rem solid $black;
   display: flex;
   font-size: 5rem;
   height: 10rem;
   justify-content: center;
   margin: 1rem;
   width: 10rem;
+}
+
+.dark .dice {
+  border: 0.1rem solid $ui-white;
 }
 
 p {

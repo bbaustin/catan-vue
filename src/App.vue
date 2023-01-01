@@ -1,6 +1,6 @@
 <template>
   <Modal v-if="!players.length" @set-players="(players) => setPlayers(players)" />
-  <main @click="handleClick">
+  <main @click="handleClick" :class="this.isDarkMode ? 'dark' : ''">
     <NameDisplay
       v-if="allRolls.length"
       :currentPlayer="players[currentPlayerIndex]"
@@ -39,6 +39,9 @@ export default {
     Modal,
     NameDisplay,
   },
+  destroyed() {
+    window.removeEventListener('keyup', this.handleKeyUp);
+  },
   methods: {
     handleClick() {
       this.rollDice();
@@ -75,17 +78,22 @@ export default {
     },
     setPlayers(players) {
       this.players = players;
+      window.addEventListener('keyup', this.handleKeyUp);
+    },
+    handleKeyUp(event) {
+      if (event.key === 'm') this.isDarkMode = !this.isDarkMode;
     },
   },
   data() {
     return {
-      players: [],
-      currentRoll: [],
       allRolls: [],
-      previousPlayerIndex: 0,
-      currentPlayerIndex: 0,
-      maxFrequency: 1,
       currentCount: [],
+      currentPlayerIndex: 0,
+      currentRoll: [],
+      isDarkMode: false,
+      maxFrequency: 1,
+      players: [],
+      previousPlayerIndex: 0,
     };
   },
 };

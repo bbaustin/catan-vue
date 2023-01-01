@@ -20,14 +20,19 @@ html {
 
 body {
   margin: 0;
-  background: $ui-white;
-  color: $black;
 }
 
 main {
+  background: $ui-white;
+  color: $black;
   display: flex;
   flex-direction: column;
   height: 100vh;
+}
+
+main.dark {
+  background: $black;
+  color: $ui-white;
 }
 
 h1 {
