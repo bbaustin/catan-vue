@@ -27,12 +27,12 @@
 </template>
 
 <script>
-import Dice from "./components/Dice.vue";
-import Graph from "./components/Graph.vue";
-import Modal from "./components/Modal.vue";
-import NameDisplay from "./components/NameDisplay.vue";
+import Dice from './components/Dice.vue';
+import Graph from './components/Graph.vue';
+import Modal from './components/Modal.vue';
+import NameDisplay from './components/NameDisplay.vue';
 export default {
-  name: "App",
+  name: 'App',
   components: {
     Dice,
     Graph,

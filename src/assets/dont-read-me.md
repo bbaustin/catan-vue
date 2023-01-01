@@ -1,6 +1,15 @@
 ## TODO
 
-- make body or #app 100vh and flex-col, justify-content evenly
+### For v.1:
+- Improve forms
+  - autofocus text boxes
+  - extra points: make actual form
+  - toggle or notate expansion colors
+  - "return" submits
+
+
+- DONE: Make selected color look better
+- DONE: make body or #app 100vh and flex-col, justify-content evenly
 - DONE: want color for last roll in GraphNumberBox? If so, pass player[last rolled] to get the color
 - media query? 
 - filtering rolls by player

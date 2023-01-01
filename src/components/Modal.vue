@@ -1,17 +1,11 @@
 <template>
-  <section
-    class="translucent-backdrop"
-    v-if="this.modalStatus"
-  >
+  <section class="translucent-backdrop" v-if="this.modalStatus">
     <div class="modal">
       <!-- TODO: This is kind of messy with multiple modal options.  -->
       <!-- Cosider making these separate components -->
       <!-- Problem is that you would have to emit modaStatus from each -->
       <!-- Also would have to emit the submitted data two levels up -->
-      <div
-        v-if="this.modalStatus === 'NUMBER_OF_PLAYERS'"
-        class="modal-content"
-      >
+      <div v-if="this.modalStatus === 'NUMBER_OF_PLAYERS'" class="modal-content">
         <p class="topic">How many are playing?</p>
         <input
           type="text"
@@ -21,67 +15,67 @@
           autofocus
         />
         <p class="detail">Enter a number from 2-6</p>
-        <button
-          type="button"
-          @click="handleNextClick"
-        >Next</button>
+        <button type="button" @click="handleNextClick">Next</button>
       </div>
-      <div
-        v-else-if="this.modalStatus === 'PLAYER_NAMES'"
-        class="modal-content"
-      >
-        <div
-          v-for="n in this.numberOfPlayers"
-          :key="n"
-          style="width: 100%;"
-        >
+      <div v-else-if="this.modalStatus === 'PLAYER_NAMES'" class="modal-content">
+        <div v-for="n in this.numberOfPlayers" :key="n" style="width: 100%">
           <p class="topic">Enter Player {{ currentPlayerNumber }}'s name</p>
           <input
             type="text"
             v-model="currentPlayerName"
             autofocus
             ref="nameInput"
-            style="marginBottom: 4rem"
+            style="marginbottom: 4rem"
           />
-          <p class="topic">Choose a color</p>
+          <p class="topic" style="margin-top: 3rem">Choose a color</p>
           <div class="color-picker">
             <div
-              v-for="(availableColor) in this.availableColors"
-              class="color-square"
+              v-for="availableColor in this.availableColors"
+              class="color-square-holder"
               :key="availableColor"
-              :style="{ backgroundColor: availableColor, border: `${selectedColor === availableColor ? '.1rem solid yellow' : ''}` }"
+              :style="{
+                borderBottom: `${
+                  selectedColor === availableColor ? '.25rem solid black' : ''
+                }`,
+              }"
               @click="this.handleColorSquareClick(availableColor)"
-            ></div>
+            >
+              <div
+                class="color-square"
+                :style="{ backgroundColor: availableColor }"
+              ></div>
+            </div>
           </div>
-          <button
-            type="button"
-            @click="handleNextClick"
-          >Next</button>
+          <button type="button" @click="handleNextClick">Next</button>
         </div>
       </div>
-      <span
-        v-if="this.errorStatus"
-        class="error"
-      >{{ this.errorStatus }}</span>
+      <span v-if="this.errorStatus" class="error">{{ this.errorStatus }}</span>
     </div>
   </section>
 </template>
 
 <script>
-import { ERROR_STATUS, MODAL_STATUS, COLORS } from '../assets/Constants.js'
+import { ERROR_STATUS, MODAL_STATUS, COLORS } from '../assets/Constants.js';
 export default {
   name: 'Modal',
   data() {
     return {
-      availableColors: [COLORS.red, COLORS.orange, COLORS.blue, COLORS.white, COLORS.brown, COLORS.green],
+      availableColors: [
+        COLORS.red,
+        COLORS.orange,
+        COLORS.blue,
+        COLORS.white,
+        COLORS.brown,
+        COLORS.green,
+      ],
       currentPlayerName: '',
       currentPlayerNumber: 1,
       errorStatus: '',
       modalStatus: MODAL_STATUS.numberOfPlayers,
       numberOfPlayers: '',
       players: [],
-      selectedColor: ''
-    }
+      selectedColor: '',
+    };
   },
   methods: {
     handleNextClick() {
@@ -89,30 +83,30 @@ export default {
       // if (this.modalStatus === MODAL_STATUS.playerNames) this.getPlayerNamesAndColors()
       if (this.modalStatus === MODAL_STATUS.numberOfPlayers) {
         if (!/^([2-6]{1,})$/.test(this.numberOfPlayers)) {
-          return this.errorStatus = ERROR_STATUS.numberOfPlayersError
+          return (this.errorStatus = ERROR_STATUS.numberOfPlayersError);
         }
-        if (this.errorStatus) this.errorStatus = ''
-        // TODO: emit number? Maybe not, just use length of players, no? 
-        return this.modalStatus = MODAL_STATUS.playerNames
+        if (this.errorStatus) this.errorStatus = '';
+        // TODO: emit number? Maybe not, just use length of players, no?
+        return (this.modalStatus = MODAL_STATUS.playerNames);
       }
 
       if (this.modalStatus === MODAL_STATUS.playerNames) {
         if (!this.selectedColor) {
-          return this.errorStatus = ERROR_STATUS.playerColorError
+          return (this.errorStatus = ERROR_STATUS.playerColorError);
         }
-        this.currentPlayerNumber++
+        this.currentPlayerNumber++;
         if (this.currentPlayerNumber > this.numberOfPlayers) {
-          this.modalStatus = ''
-          this.$emit('set-players', this.players)
+          this.modalStatus = '';
+          this.$emit('set-players', this.players);
         }
         if (this.currentPlayerName === '') {
-          this.currentPlayerName = `Player ${this.currentPlayerNumber - 1}`
+          this.currentPlayerName = `Player ${this.currentPlayerNumber - 1}`;
         }
-        this.players.push({ name: this.currentPlayerName, color: this.selectedColor })
-        this.availableColors.splice(this.availableColors.indexOf(this.selectedColor), 1)
-        this.currentPlayerName = ''
-        this.selectedColor = ''
-        this.errorStatus = ''
+        this.players.push({ name: this.currentPlayerName, color: this.selectedColor });
+        this.availableColors.splice(this.availableColors.indexOf(this.selectedColor), 1);
+        this.currentPlayerName = '';
+        this.selectedColor = '';
+        this.errorStatus = '';
       }
     },
     // getNumberOfPlayers() {
@@ -138,26 +132,24 @@ export default {
     //   this.selectedColor = ''
     // },
     handleColorSquareClick(color) {
-      this.selectedColor = color
+      this.selectedColor = color;
     },
   },
-  //TODO: Add focus to each input. 
+  //TODO: Add focus to each input.
   // Not sure if I'm using the ref wrong, or if I'm trying to access it before it's on the DOM
   // updated() {
   //   if (this.$refs.nameInput) this.$refs.nameInput.focus()
   // }
-
-}
-
+};
 </script>
 
 <style lang="scss" scoped>
-@import "../scss/_variables.scss";
+@import '../scss/_variables.scss';
 
 .translucent-backdrop {
   align-items: center;
-  background: rgba(0, 0, 0, .5);
-  backdrop-filter: blur(.75rem);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(0.75rem);
   display: flex;
   height: 100vh;
   justify-content: center;
@@ -194,7 +186,16 @@ export default {
 .color-picker {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 6rem;
+  margin-bottom: 3rem;
+}
+
+.color-square-holder {
+  height: 6rem;
+  border-bottom: 0.25rem solid transparent;
+}
+
+.color-square-holder:hover {
+  border-bottom: 0.25rem solid grey;
 }
 
 .color-square {
@@ -211,11 +212,11 @@ p {
 input {
   font-size: 2.4rem;
   height: 4rem;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   padding-left: 1rem;
 }
 
-input[inputmode="decimal"] {
+input[inputmode='decimal'] {
   padding-right: 1rem;
   text-align: center;
   width: 3rem;
