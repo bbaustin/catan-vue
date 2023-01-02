@@ -64,7 +64,7 @@ section {
   border-bottom: 0.1rem solid $black;
   border-left: 0.1rem solid $black;
   display: flex;
-  height: 50rem;
+  height: 12rem;
   justify-content: space-around;
 }
 
@@ -90,6 +90,9 @@ section {
   margin: 2.5rem 0rem 0rem 0.1rem;
 }
 @media screen and (max-width: 768px) {
+  .graph {
+    height: 50rem;
+  }
   .graph-bar-part {
     border: none;
   }
