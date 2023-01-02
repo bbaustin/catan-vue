@@ -49,7 +49,10 @@
           <button type="button" @click="handleNextClick">Next</button>
         </div>
       </div>
-      <p class="note">Note: Once the game begins, hit 'm' to toggle dark/light mode.</p>
+      <p class="note">
+        Note: Once the game begins, <br />
+        hit 'm' to toggle dark/light mode.
+      </p>
       <span v-if="this.errorStatus" class="error">{{ this.errorStatus }}</span>
     </div>
   </section>
@@ -145,7 +148,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../scss/_variables.scss';
+@import '../scss/modules/_colors.scss';
 
 .translucent-backdrop {
   align-items: center;
@@ -164,7 +167,7 @@ export default {
 
 .modal {
   align-items: center;
-  background: $white;
+  background: $ui-white;
   border: 1px solid $black;
   display: flex;
   flex-direction: column;
@@ -243,5 +246,46 @@ button {
 .note {
   font-size: 1.2rem;
   margin-top: 2rem;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .modal {
+    padding: 5rem 2rem;
+    width: 75%;
+  }
+
+  .topic {
+    font-size: 3rem;
+  }
+
+  .detail {
+    font-size: 2rem;
+    margin-top: 0;
+  }
+
+  .note {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  button {
+    margin-bottom: 0;
+  }
+
+  //   .color-square-holder {
+  //     height: 4rem;
+  //   }
+  //
+  //   .color-square {
+  //     height: 3rem;
+  //     width: 3rem;
+  //   }
+
+  button {
+    font-size: 2rem;
+    height: 4rem;
+    width: 8rem;
+  }
 }
 </style>

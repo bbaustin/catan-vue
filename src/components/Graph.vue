@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../scss/variables.scss';
+@import '../scss/modules/_colors.scss';
 
 section {
   margin: 0 2rem;
@@ -64,7 +64,7 @@ section {
   border-bottom: 0.1rem solid $black;
   border-left: 0.1rem solid $black;
   display: flex;
-  height: 12rem;
+  height: 50rem;
   justify-content: space-around;
 }
 
@@ -88,5 +88,10 @@ section {
   display: flex;
   justify-content: space-around;
   margin: 2.5rem 0rem 0rem 0.1rem;
+}
+@media screen and (max-width: 768px) {
+  .graph-bar-part {
+    border: none;
+  }
 }
 </style>

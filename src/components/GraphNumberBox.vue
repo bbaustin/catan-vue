@@ -14,7 +14,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../scss/_variables.scss';
+@import '../scss/modules/_colors.scss';
 
 .graph-number-box {
   align-items: center;
@@ -42,5 +42,10 @@ p:first-child {
 p:last-child {
   font-size: 1.8rem;
   margin-bottom: 2rem;
+}
+@media screen and (max-width: 768px) {
+  p:last-child {
+    font-size: 1.5rem;
+  }
 }
 </style>

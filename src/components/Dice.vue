@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../scss/_variables.scss';
+@import '../scss/modules/_colors.scss';
 
 section {
   align-items: center;

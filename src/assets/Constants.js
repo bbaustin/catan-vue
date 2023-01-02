@@ -17,5 +17,5 @@ export const COLORS = {
   green: '#20bf55',
   blue: '#0a81d1',
   brown: '#715232',
-  white: '#dad7cd',
+  white: '#9b9b9b',
 };
