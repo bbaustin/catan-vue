@@ -2,10 +2,9 @@
 
 ### For v.1:
 - Improve forms
-  - autofocus text boxes
-  - extra points: make actual form
-  - toggle or notate expansion colors
-  - "return" submits
+  - autofocus text boxes 
+    - ALMOST! The first one isn't being focused. It's not there when I wanna focus it (ERROR: this.$refs.nameInput[0] does not exist)
+  - when you tab through, but then tab BACK to the color list, it focuses the final color but doesn't underline it. No clue about this one haha
 
 
 - DONE: Make selected color look better
