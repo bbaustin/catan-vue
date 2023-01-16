@@ -1,11 +1,13 @@
 <template>
-  <section class="translucent-backdrop" v-if="this.modalStatus">
+  <section
+    class="translucent-backdrop"
+    v-if="this.modalStatus"
+  >
     <div class="modal">
-      <!-- TODO: This is kind of messy with multiple modal options.  -->
-      <!-- Cosider making these separate components -->
-      <!-- Problem is that you would have to emit modaStatus from each -->
-      <!-- Also would have to emit the submitted data two levels up -->
-      <div v-if="this.modalStatus === 'NUMBER_OF_PLAYERS'" class="modal-content">
+      <div
+        v-if="this.modalStatus === 'NUMBER_OF_PLAYERS'"
+        class="modal-content"
+      >
         <p class="topic">How many are playing?</p>
         <input
           type="text"
@@ -15,45 +17,76 @@
           autofocus
         />
         <p class="detail">Enter a number from 2-6</p>
-        <button type="button" @click="handleNextClick">Next</button>
+        <button
+          type="button"
+          @click="handleNextClick"
+        >
+          Next
+        </button>
       </div>
-      <div v-else-if="this.modalStatus === 'PLAYER_NAMES'" class="modal-content">
-        <div v-for="n in this.numberOfPlayers" :key="n" style="width: 100%">
+      <div
+        v-else-if="this.modalStatus === 'PLAYER_NAMES'"
+        class="modal-content"
+      >
+        <div
+          v-for="n in this.numberOfPlayers"
+          :key="n"
+          style="width: 100%"
+        >
           <p class="topic">Enter Player {{ currentPlayerNumber }}'s name</p>
           <input
             type="text"
             v-model="currentPlayerName"
             autofocus
             ref="nameInput"
-            style="marginbottom: 4rem"
           />
-          <p class="topic" style="margin-top: 3rem">Choose a color</p>
+          <p
+            class="topic"
+            style="margin-top: 3rem"
+          >
+            Choose a color
+          </p>
           <div class="color-picker">
             <div
               v-for="availableColor in this.availableColors"
               class="color-square-holder"
+              id="availableColor"
               :key="availableColor"
               :style="{
-                borderBottom: `${
-                  selectedColor === availableColor ? '.25rem solid black' : ''
-                }`,
+                borderBottom: `${selectedColor === availableColor ? '.25rem solid black'}`,
               }"
               @click="this.handleColorSquareClick(availableColor)"
             >
-              <div
+              <label
+                for="availableColor"
+                class="hidden"
+                >{{ availableColor }}</label
+              >
+              <input
+                type="radio"
+                name="color"
                 class="color-square"
                 :style="{ backgroundColor: availableColor }"
-              ></div>
+              />
             </div>
           </div>
-          <button type="button" @click="handleNextClick">Next</button>
+          <button
+            type="button"
+            @click="handleNextClick"
+          >
+            Next
+          </button>
         </div>
       </div>
       <p class="note">
         Note: Once the game begins, <br />
         hit 'm' to toggle dark/light mode.
       </p>
-      <span v-if="this.errorStatus" class="error">{{ this.errorStatus }}</span>
+      <span
+        v-if="this.errorStatus"
+        class="error"
+        >{{ this.errorStatus }}</span
+      >
     </div>
   </section>
 </template>
@@ -64,14 +97,7 @@ export default {
   name: 'Modal',
   data() {
     return {
-      availableColors: [
-        COLORS.red,
-        COLORS.orange,
-        COLORS.blue,
-        COLORS.white,
-        COLORS.brown,
-        COLORS.green,
-      ],
+      availableColors: [COLORS.red, COLORS.orange, COLORS.blue, COLORS.white, COLORS.brown, COLORS.green],
       currentPlayerName: '',
       currentPlayerNumber: 1,
       errorStatus: '',
@@ -83,22 +109,23 @@ export default {
   },
   methods: {
     handleNextClick() {
-      // if (this.modalStatus === MODAL_STATUS.numberOfPlayers) this.getNumberOfPlayers()
-      // if (this.modalStatus === MODAL_STATUS.playerNames) this.getPlayerNamesAndColors()
+      // FIRST MODAL
       if (this.modalStatus === MODAL_STATUS.numberOfPlayers) {
         if (!/^([2-6]{1,})$/.test(this.numberOfPlayers)) {
           return (this.errorStatus = ERROR_STATUS.numberOfPlayersError);
         }
         if (this.errorStatus) this.errorStatus = '';
-        // TODO: emit number? Maybe not, just use length of players, no?
-        return (this.modalStatus = MODAL_STATUS.playerNames);
+        this.modalStatus = MODAL_STATUS.playerNames;
+        this.selectedColor = this.availableColors[0]; // Set first color radio as "selected"
+        return;
       }
-
+      // SECOND, THIRD, ETC... MODAL
       if (this.modalStatus === MODAL_STATUS.playerNames) {
         if (!this.selectedColor) {
           return (this.errorStatus = ERROR_STATUS.playerColorError);
         }
         this.currentPlayerNumber++;
+        // Finished with modal
         if (this.currentPlayerNumber > this.numberOfPlayers) {
           this.modalStatus = '';
           this.$emit('set-players', this.players);
@@ -106,44 +133,22 @@ export default {
         if (this.currentPlayerName === '') {
           this.currentPlayerName = `Player ${this.currentPlayerNumber - 1}`;
         }
-        this.players.push({ name: this.currentPlayerName, color: this.selectedColor });
-        this.availableColors.splice(this.availableColors.indexOf(this.selectedColor), 1);
-        this.currentPlayerName = '';
-        this.selectedColor = '';
-        this.errorStatus = '';
+        this.resetForNextPlayerNamesModal();
       }
     },
-    // getNumberOfPlayers() {
-    //   if (this.numberOfPlayers < 2 || this.numberOfPlayers > 6) {
-    //     return this.errorStatus = ERROR_STATUS.numberOfPlayersError
-    //   }
-    //   if (this.errorStatus) this.errorStatus = ''
-    //   // emit number
-    //   return this.modalStatus = MODAL_STATUS.playerNames
-    // },
-    // getPlayerNamesAndColors() {
-    //   this.currentPlayerNumber++
-    //   if (this.currentPlayerNumber > this.numberOfPlayers) {
-    //     this.modalStatus = ''
-    //     // return emit playerNames
-    //   }
-    //   if (this.currentPlayerName === '') {
-    //     this.currentPlayerName = `Player ${this.currentPlayerNumber}`
-    //   }
-    //   this.players.push({ name: this.currentPlayerName, color: this.selectedColor })
-    //   this.availableColors.splice(this.availableColors.indexOf(this.selectedColor), 1)
-    //   this.currentPlayerName = ''
-    //   this.selectedColor = ''
-    // },
+    resetForNextPlayerNamesModal() {
+      this.players.push({ name: this.currentPlayerName, color: this.selectedColor });
+      this.availableColors.splice(this.availableColors.indexOf(this.selectedColor), 1);
+      this.currentPlayerName = '';
+      this.selectedColor = this.availableColors[0];
+      this.$refs.nameInput[0].focus();
+      console.log(this.$refs.nameInput[0]);
+      this.errorStatus = '';
+    },
     handleColorSquareClick(color) {
       this.selectedColor = color;
     },
   },
-  //TODO: Add focus to each input.
-  // Not sure if I'm using the ref wrong, or if I'm trying to access it before it's on the DOM
-  // updated() {
-  //   if (this.$refs.nameInput) this.$refs.nameInput.focus()
-  // }
 };
 </script>
 
@@ -193,9 +198,25 @@ export default {
   margin-bottom: 3rem;
 }
 
+input[type='radio'] {
+  /* https://moderncss.dev/pure-css-custom-styled-radio-buttons/ /*
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  appearance: none;
+  /* For iOS < 15 to remove gradient background */
+  background-color: #fff;
+  /* Not removed via appearance */
+  margin: 0;
+  padding: 0;
+}
+
 .color-square-holder {
   height: 6rem;
   border-bottom: 0.25rem solid transparent;
+}
+
+.color-square-holder:first-child {
+  border-bottom: 0.25rem solid black;
 }
 
 .color-square-holder:hover {
@@ -207,6 +228,17 @@ export default {
   cursor: pointer;
   height: 5rem;
   width: 5rem;
+}
+
+.hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
 }
 
 p {
