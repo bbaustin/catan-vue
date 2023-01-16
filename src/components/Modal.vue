@@ -53,7 +53,7 @@
               id="availableColor"
               :key="availableColor"
               :style="{
-                borderBottom: `${selectedColor === availableColor ? '.25rem solid black'}`,
+                borderBottom: `${selectedColor === availableColor ? '.25rem solid black' : '.25rem solid transparent'}`,
               }"
               @click="this.handleColorSquareClick(availableColor)"
             >
