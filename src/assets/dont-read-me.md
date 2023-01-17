@@ -7,6 +7,7 @@
   - when you tab through, but then tab BACK to the color list, it focuses the final color but doesn't underline it. No clue about this one haha
 
 
+- DONE: In your label... it shoulds say the color name, not the hex code
 - DONE: Make selected color look better
 - DONE: make body or #app 100vh and flex-col, justify-content evenly
 - DONE: want color for last roll in GraphNumberBox? If so, pass player[last rolled] to get the color

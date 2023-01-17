@@ -1,13 +1,7 @@
 <template>
-  <section
-    class="translucent-backdrop"
-    v-if="this.modalStatus"
-  >
+  <section class="translucent-backdrop" v-if="this.modalStatus">
     <div class="modal">
-      <div
-        v-if="this.modalStatus === 'NUMBER_OF_PLAYERS'"
-        class="modal-content"
-      >
+      <div v-if="this.modalStatus === 'NUMBER_OF_PLAYERS'" class="modal-content">
         <p class="topic">How many are playing?</p>
         <input
           type="text"
@@ -17,76 +11,49 @@
           autofocus
         />
         <p class="detail">Enter a number from 2-6</p>
-        <button
-          type="button"
-          @click="handleNextClick"
-        >
-          Next
-        </button>
+        <button type="button" @click="handleNextClick">Next</button>
       </div>
-      <div
-        v-else-if="this.modalStatus === 'PLAYER_NAMES'"
-        class="modal-content"
-      >
-        <div
-          v-for="n in this.numberOfPlayers"
-          :key="n"
-          style="width: 100%"
-        >
+      <div v-else-if="this.modalStatus === 'PLAYER_NAMES'" class="modal-content">
+        <div v-for="n in this.numberOfPlayers" :key="n" style="width: 100%">
           <p class="topic">Enter Player {{ currentPlayerNumber }}'s name</p>
-          <input
-            type="text"
-            v-model="currentPlayerName"
-            autofocus
-            ref="nameInput"
-          />
-          <p
-            class="topic"
-            style="margin-top: 3rem"
-          >
-            Choose a color
-          </p>
+          <input type="text" v-model="currentPlayerName" autofocus ref="nameInput" />
+          <p class="topic" style="margin-top: 3rem">Choose a color</p>
           <div class="color-picker">
             <div
-              v-for="availableColor in this.availableColors"
+              v-for="(availableColor, index) in this.availableColors"
               class="color-square-holder"
-              id="availableColor"
-              :key="availableColor"
+              :id="Object.keys(availableColor)[0]"
+              :key="Object.keys(availableColor)[0]"
               :style="{
-                borderBottom: `${selectedColor === availableColor ? '.25rem solid black' : '.25rem solid transparent'}`,
+                borderBottom: `${
+                  selectedColor == Object.values(availableColor)[0]
+                    ? '.25rem solid black'
+                    : '.25rem solid transparent'
+                }`,
               }"
-              @click="this.handleColorSquareClick(availableColor)"
+              @click="
+                this.handleColorSquareClick(Object.values(availableColor)[0], index)
+              "
             >
-              <label
-                for="availableColor"
-                class="hidden"
-                >{{ availableColor }}</label
-              >
+              <label :for="Object.keys(availableColor)[0]" class="hidden">{{
+                Object.keys(availableColor)[0]
+              }}</label>
               <input
                 type="radio"
                 name="color"
                 class="color-square"
-                :style="{ backgroundColor: availableColor }"
+                :style="{ backgroundColor: Object.values(availableColor)[0] }"
               />
             </div>
           </div>
-          <button
-            type="button"
-            @click="handleNextClick"
-          >
-            Next
-          </button>
+          <button type="button" @click="handleNextClick">Next</button>
         </div>
       </div>
       <p class="note">
         Note: Once the game begins, <br />
         hit 'm' to toggle dark/light mode.
       </p>
-      <span
-        v-if="this.errorStatus"
-        class="error"
-        >{{ this.errorStatus }}</span
-      >
+      <span v-if="this.errorStatus" class="error">{{ this.errorStatus }}</span>
     </div>
   </section>
 </template>
@@ -97,7 +64,14 @@ export default {
   name: 'Modal',
   data() {
     return {
-      availableColors: [COLORS.red, COLORS.orange, COLORS.blue, COLORS.white, COLORS.brown, COLORS.green],
+      availableColors: [
+        { red: '#D51212' },
+        { orange: '#ee8434' },
+        { white: '#9b9b9b' },
+        { blue: '#0a81d1' },
+        { brown: '#715232' },
+        { green: '#20bf55' },
+      ],
       currentPlayerName: '',
       currentPlayerNumber: 1,
       errorStatus: '',
@@ -105,6 +79,7 @@ export default {
       numberOfPlayers: '',
       players: [],
       selectedColor: '',
+      selectedIndex: 0,
     };
   },
   methods: {
@@ -116,7 +91,7 @@ export default {
         }
         if (this.errorStatus) this.errorStatus = '';
         this.modalStatus = MODAL_STATUS.playerNames;
-        this.selectedColor = this.availableColors[0]; // Set first color radio as "selected"
+        this.selectedColor = Object.values(this.availableColors[0])[0]; // Set first color radio as "selected"
         return;
       }
       // SECOND, THIRD, ETC... MODAL
@@ -138,15 +113,16 @@ export default {
     },
     resetForNextPlayerNamesModal() {
       this.players.push({ name: this.currentPlayerName, color: this.selectedColor });
-      this.availableColors.splice(this.availableColors.indexOf(this.selectedColor), 1);
+      this.availableColors.splice(this.selectedIndex, 1);
       this.currentPlayerName = '';
-      this.selectedColor = this.availableColors[0];
+      this.selectedColor = Object.values(this.availableColors[0])[0];
       this.$refs.nameInput[0].focus();
-      console.log(this.$refs.nameInput[0]);
+      this.selectedIndex = 0;
       this.errorStatus = '';
     },
-    handleColorSquareClick(color) {
+    handleColorSquareClick(color, index) {
       this.selectedColor = color;
+      this.selectedIndex = index;
     },
   },
 };
@@ -304,15 +280,6 @@ button {
   button {
     margin-bottom: 0;
   }
-
-  //   .color-square-holder {
-  //     height: 4rem;
-  //   }
-  //
-  //   .color-square {
-  //     height: 3rem;
-  //     width: 3rem;
-  //   }
 
   button {
     font-size: 2rem;

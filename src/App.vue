@@ -22,7 +22,6 @@
       :currentCount="currentCount"
       :highlight="players.length ? players[previousPlayerIndex].color : ''"
     />
-    <!-- <NameDisplayNext :nextPlayer="players[function to get correct index even if at end of array] TODO: -->
   </main>
 </template>
 
