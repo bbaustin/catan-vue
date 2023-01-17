@@ -22,7 +22,6 @@
             <div
               v-for="(availableColor, index) in this.availableColors"
               class="color-square-holder"
-              :id="Object.keys(availableColor)[0]"
               :key="Object.keys(availableColor)[0]"
               :style="{
                 borderBottom: `${
@@ -42,6 +41,7 @@
                 type="radio"
                 name="color"
                 class="color-square"
+                :id="Object.keys(availableColor)[0]"
                 :style="{ backgroundColor: Object.values(availableColor)[0] }"
               />
             </div>
