@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://hereismy.website/catan-dice-roller-2/",
+  "homepage": "https://catan.hereismy.website/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
